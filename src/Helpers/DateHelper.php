@@ -1,6 +1,6 @@
 <?php
 
-namespace Aweram\TraitsHelpers\Helpers;
+namespace GIS\TraitsHelpers\Helpers;
 
 use Carbon\Carbon;
 use Mockery\Exception;

@@ -1,5 +1,5 @@
 {
-    "name": "aweram/traits-helpers",
+    "name": "4geo35/traits-helpers",
     "description": "Helpful traits and helper functions",
     "minimum-stability": "dev",
     "license": "MIT",
@@ -14,7 +14,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Aweram\\TraitsHelpers\\": "src/"
+            "GIS\\TraitsHelpers\\": "src/"
         },
         "files": [
             "src/helpers.php"
@@ -23,7 +23,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Aweram\\TraitsHelpers\\TraitsHelpersServiceProvider"
+                "GIS\\TraitsHelpers\\TraitsHelpersServiceProvider"
             ]
         }
     }

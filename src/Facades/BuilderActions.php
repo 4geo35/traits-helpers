@@ -1,8 +1,8 @@
 <?php
 
-namespace Aweram\TraitsHelpers\Facades;
+namespace GIS\TraitsHelpers\Facades;
 
-use Aweram\TraitsHelpers\Helpers\BuilderActionsManager;
+use GIS\TraitsHelpers\Helpers\BuilderActionsManager;
 use Illuminate\Support\Facades\Facade;
 
 /**

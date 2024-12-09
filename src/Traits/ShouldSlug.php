@@ -1,6 +1,6 @@
 <?php
 
-namespace Aweram\TraitsHelpers\Traits;
+namespace GIS\TraitsHelpers\Traits;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;

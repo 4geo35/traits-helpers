@@ -1,9 +1,9 @@
 <?php
 
-namespace Aweram\TraitsHelpers;
+namespace GIS\TraitsHelpers;
 
-use Aweram\TraitsHelpers\Helpers\BuilderActionsManager;
-use Aweram\TraitsHelpers\Helpers\DateHelper;
+use GIS\TraitsHelpers\Helpers\BuilderActionsManager;
+use GIS\TraitsHelpers\Helpers\DateHelper;
 use Illuminate\Support\ServiceProvider;
 
 class TraitsHelpersServiceProvider extends ServiceProvider

@@ -1,6 +1,6 @@
 <?php
 
-namespace Aweram\TraitsHelpers\Helpers;
+namespace GIS\TraitsHelpers\Helpers;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\Builder as QueryBuilder;

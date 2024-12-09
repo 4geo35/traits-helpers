@@ -1,6 +1,6 @@
 <?php
 
-namespace Aweram\TraitsHelpers\Traits;
+namespace GIS\TraitsHelpers\Traits;
 trait ShouldHumanDate
 {
     public function getCreatedMoscowAttribute()
