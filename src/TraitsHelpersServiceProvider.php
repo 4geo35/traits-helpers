@@ -2,6 +2,7 @@
 
 namespace GIS\TraitsHelpers;
 
+use GIS\TraitsHelpers\Commands\RenameMorphType;
 use GIS\TraitsHelpers\Helpers\BuilderActionsManager;
 use GIS\TraitsHelpers\Helpers\DateHelper;
 use Illuminate\Support\ServiceProvider;
@@ -22,5 +23,12 @@ class TraitsHelpersServiceProvider extends ServiceProvider
         $this->app->singleton("builder-actions", function () {
             return new BuilderActionsManager;
         });
+
+        // Commands
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                RenameMorphType::class
+            ]);
+        }
     }
 }
