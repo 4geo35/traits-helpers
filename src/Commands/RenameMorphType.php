@@ -42,6 +42,16 @@ class RenameMorphType extends Command
             return;
         }
 
+        if (! class_exists($from)) {
+            $this->error("Class $from not found");
+            return;
+        }
+
+        if (! class_exists($to)) {
+            $this->error("Class $to not found");
+            return;
+        }
+
         DB::table($table)
             ->where($column, $from)
             ->update([$column => $to]);
