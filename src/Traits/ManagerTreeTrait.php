@@ -67,12 +67,7 @@ trait ManagerTreeTrait
     protected function makeRawCategoryData(): array
     {
         $query = $this->modelClass::query();
-        if ($this->hasImage) {
-            $query->select("id", "title", "slug", "parent_id", "priority", "image_id")
-                ->with("image");
-        } else {
-            $query->select("id", "title", "slug", "parent_id", "priority");
-        }
+        if ($this->hasImage) { $query->with("image"); }
         $categories = $query->orderBy("parent_id")
             ->get();
 
@@ -83,6 +78,7 @@ trait ManagerTreeTrait
              * @var ShouldTreeInterface $category
              */
             $data = [
+                "model" => $category,
                 "title" => $category->title,
                 "slug" => $category->slug,
                 "parent" => $category->parent_id,
@@ -92,11 +88,15 @@ trait ManagerTreeTrait
                 "children" => [],
             ];
             if ($this->hasImage) { $data["imageUrl"] = $category->image_id ? $category->image->storage : null; }
+            $this->expandItemData($data, $category);
             $tree[$category->id] = $data;
             if (empty($category->parent_id)) { $roots[] = $category->id; }
         }
         return [$tree, $roots];
     }
+
+    protected function expandItemData(&$data, ShouldTreeInterface $category): void
+    {}
 
     protected function addChildren(array &$tree): void
     {
