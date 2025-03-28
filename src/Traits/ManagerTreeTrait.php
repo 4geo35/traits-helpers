@@ -12,12 +12,16 @@ trait ManagerTreeTrait
 
     public function getCategoryTree(array $newOrder = null): array
     {
-        list($tree, $roots) = $this->makeRawCategoryData();
-        if ($newOrder) {
-            return $this->setTmpOrder($newOrder, $tree);
+        list($items, $roots) = $this->makeRawCategoryData();
+        if ($newOrder) { return $this->setTmpOrder($newOrder, $items); }
+
+        $grouped = $this->splitByParents($items);
+        $tree = [];
+        foreach ($roots as $id) {
+            $item = $items[$id];
+            $this->addChildren($item, $grouped);
+            $tree[$id] = $item;
         }
-        $this->addChildren($tree);
-        $this->clearTree($tree, $roots);
         return $this->sortByPriority($tree);
     }
 
@@ -71,7 +75,7 @@ trait ManagerTreeTrait
         $categories = $query->orderBy("parent_id")
             ->get();
 
-        $tree = [];
+        $items = [];
         $roots = [];
         foreach ($categories as $category) {
             /**
@@ -89,52 +93,35 @@ trait ManagerTreeTrait
             ];
             if ($this->hasImage) { $data["imageUrl"] = $category->image_id ? $category->image->storage : null; }
             $this->expandItemData($data, $category);
-            $tree[$category->id] = $data;
+            $items[$category->id] = $data;
             if (empty($category->parent_id)) { $roots[] = $category->id; }
         }
-        return [$tree, $roots];
+        return [$items, $roots];
+    }
+
+    protected function splitByParents(array $items): array
+    {
+        $groups = [];
+        foreach ($items as $item) {
+            $parentId = $item["parent"];
+            if (empty($parentId)) { continue; }
+            if (!isset($groups[$parentId])) { $groups[$parentId] = []; }
+            $groups[$parentId][] = $item;
+        }
+        return $groups;
     }
 
     protected function expandItemData(&$data, ShouldTreeInterface $category): void
     {}
 
-    protected function addChildren(array &$tree): void
+    protected function addChildren(array &$parent, array $grouped): void
     {
-        foreach ($tree as $id => $item) {
-            if (empty($item["parent"]))
-                continue;
-            $this->addChild($tree, $item, $id);
-        }
-    }
-
-    protected function addChild(&$tree, $item, $id, $children = false): void
-    {
-        // Добавление к дочерним
-        if (! $children) $tree[$item["parent"]]["children"][$id] = $item;
-        // Обновление дочерних
-        else $tree[$item["parent"]]["children"][$id]["children"] = $children;
-
-        $parent = $tree[$item["parent"]];
-        if (! empty($parent["parent"])) {
-            $items = $parent["children"];
-            $this->addChild($tree, $parent, $parent["id"], $items);
-        }
-    }
-
-    protected function clearTree(&$tree, $roots): void
-    {
-        foreach ($roots as $id) {
-            $this->removeChildren($tree, $id);
-        }
-    }
-
-    protected function removeChildren(&$tree, $id): void
-    {
-        if (empty($tree[$id])) return;
-        $item = $tree[$id];
-        foreach ($item["children"] as $key => $child) {
-            $this->removeChildren($tree, $key);
-            if (! empty($tree[$key])) unset($tree[$key]);
+        $parentId = $parent["id"];
+        if (empty($grouped[$parentId])) { return; }
+        $children = $grouped[$parentId];
+        foreach ($children as $child) {
+            $this->addChildren($child, $grouped);
+            $parent["children"][$child["id"]] = $child;
         }
     }
 
