@@ -18,13 +18,13 @@ class BuilderActionsManager
         }
     }
 
-    public function extendPublished(mixed $query, string $value, string $yes = "yes", string $no = "no"): void
+    public function extendPublished(mixed $query, string $value, string $yes = "yes", string $no = "no", string $field = "published_at"): void
     {
         /**
          * @var Builder|QueryBuilder $query
          */
-        if (trim($value) === $yes) $query->whereNotNull("published_at");
-        if (trim($value) === $no) $query->whereNull("published_at");
+        if (trim($value) === $yes) $query->whereNotNull($field);
+        if (trim($value) === $no) $query->whereNull($field);
     }
 
     public function extendDate(mixed $query, string $from, string $to, string $field = "created_at"): void
