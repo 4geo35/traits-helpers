@@ -9,7 +9,7 @@ trait ManagerTreeTrait
 {
     public string $modelClass;
     public bool $hasImage;
-
+    // TODO: remove category from function name?
     public function getCategoryTree(array $newOrder = null): array
     {
         list($items, $roots) = $this->makeRawCategoryData();
