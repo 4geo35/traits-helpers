@@ -31,6 +31,18 @@ class BuilderActionsManager
         }
     }
 
+    public function extendRelationIn(mixed $query, array $values, string $field, string $relation): void
+    {
+        /**
+         * @var Builder|QueryBuilder $query
+         */
+        if (! empty($values)) {
+            $query->whereHas($relation,function ($query) use ($values, $field) {
+                $query->whereIn($field, $values);
+            });
+        }
+    }
+
     public function extendPublished(mixed $query, string $value, string $yes = "yes", string $no = "no", string $field = "published_at"): void
     {
         /**
