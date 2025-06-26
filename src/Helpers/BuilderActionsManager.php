@@ -18,6 +18,19 @@ class BuilderActionsManager
         }
     }
 
+    public function extendRelationLike(mixed $query, string $value, string $field, string $relation): void
+    {
+        /**
+         * @var Builder|QueryBuilder $query
+         */
+        if (! empty($value)) {
+            $value = trim($value);
+            $query->whereHas($relation,function ($query) use ($value, $field) {
+                $query->where($field, "like", "%$value%");
+            });
+        }
+    }
+
     public function extendPublished(mixed $query, string $value, string $yes = "yes", string $no = "no", string $field = "published_at"): void
     {
         /**
