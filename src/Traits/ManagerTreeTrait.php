@@ -10,6 +10,7 @@ trait ManagerTreeTrait
     public string $modelClass;
     public bool $hasImage;
     // TODO: remove category from function name?
+    // TODO: add cascadeShutdown?
     public function getCategoryTree(array $newOrder = null): array
     {
         list($items, $roots) = $this->makeRawCategoryData();
