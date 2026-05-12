@@ -34,6 +34,7 @@ trait ShouldSlug
 
         $slug = empty($this->slug) ? $this->{$this->getSlugKey()} : $this->slug;
         $slug = Str::slug($slug);
+        if (empty($slug)) { $slug = Str::slug(Str::random(5)); }
         $buf = $slug;
         $i = 1;
         $id = $updating ? $this->id : 0;
