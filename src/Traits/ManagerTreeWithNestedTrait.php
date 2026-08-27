@@ -61,33 +61,6 @@ trait ManagerTreeWithNestedTrait
         return $eIds;
     }
 
-    public function getChildrenIds(ShouldTreeInterface $item, bool $includeSelf = false): array
-    {
-        // TODO: make cache?
-        $ids = [];
-        if ($includeSelf) { $ids[] = $item->id; }
-        $children = $item->children()->select("id")->whereNotNull("published_at")->get();
-        foreach ($children as $child) {
-            $ids[] = $child->id;
-            $ids = array_merge($ids, $this->getChildrenIds($child));
-        }
-        return array_unique($ids);
-    }
-
-    public function getParents(ShouldTreeInterface $item): array
-    {
-        $result = [];
-        if ($item->parent) {
-            $result[] = (object) [
-                "id" => $item->parent->id,
-                "slug" => $item->parent->slug,
-                "title" => $item->parent->title,
-            ];
-            $result = array_merge($this->getParents($item->parent), $result);
-        }
-        return $result;
-    }
-
     protected function makeNestedItemDataWithElements(ShouldTreeInterface $item = null): array
     {
         $query = $this->modelClass::query();
