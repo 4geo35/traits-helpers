@@ -12,9 +12,9 @@ use Mockery\Exception;
  */
 class DateHelper
 {
-    const TZ = "Europe/Moscow";
-    const UTC = "Etc/UTC";
-    const ACTIONS = [
+    const string TZ = "Europe/Moscow";
+    const string UTC = "Etc/UTC";
+    const array ACTIONS = [
         "forFilter",
         "changeTz",
         "format"

@@ -11,7 +11,7 @@ trait ManagerTreeWithNestedTrait
     public bool $isMorphed = false;
     public string $elementRelationCol;
 
-    public function buildNestedTree(ShouldTreeInterface $item = null): array
+    public function buildNestedTree(?ShouldTreeInterface $item = null): array
     {
         list($items, $roots) = $this->makeNestedItemDataWithElements($item);
         $grouped = $this->splitByParents($items);
@@ -61,7 +61,7 @@ trait ManagerTreeWithNestedTrait
         return $eIds;
     }
 
-    protected function makeNestedItemDataWithElements(ShouldTreeInterface $item = null): array
+    protected function makeNestedItemDataWithElements(?ShouldTreeInterface $item = null): array
     {
         $query = $this->modelClass::query();
         $this->expandRawDataQueryWith($query, $item);

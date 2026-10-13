@@ -11,7 +11,7 @@ trait ManagerTreeTrait
     public bool $hasImage;
     // TODO: remove category from function name?
     // TODO: add cascadeShutdown?
-    public function getCategoryTree(array $newOrder = null): array
+    public function getCategoryTree(?array $newOrder = null): array
     {
         list($items, $roots) = $this->makeRawCategoryData();
         if ($newOrder) { return $this->setTmpOrder($newOrder, $items); }
