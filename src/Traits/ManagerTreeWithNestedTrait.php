@@ -89,7 +89,7 @@ trait ManagerTreeWithNestedTrait
         return [$items, $roots];
     }
 
-    protected function expandRawDataQueryWith(Builder $query, ShouldTreeInterface $item = null): void
+    protected function expandRawDataQueryWith(Builder $query, ?ShouldTreeInterface $item = null): void
     {}
 
     protected function expandNestedData(array &$data, ShouldTreeInterface $item): void

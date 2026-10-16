@@ -63,7 +63,7 @@ trait ManagerTreeTrait
         return $result;
     }
 
-    protected function buildCategoryTree(array $newOrder, int $parent = null): void
+    protected function buildCategoryTree(array $newOrder, ?int $parent = null): void
     {
         foreach ($newOrder as $priority => $item) {
             $id = $item["id"];
